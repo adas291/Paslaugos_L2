@@ -1,0 +1,45 @@
+version: '3.4'
+
+
+services:
+
+
+  gateway:
+    image: ${DOCKER_REGISTRY-}gateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    depends_on:
+      - coursesapi
+      - studentsapi 
+      - rabbitmq 
+
+
+  coursesapi:
+    image: ${DOCKER_REGISTRY-}coursesapi
+    build:
+      context: .
+      dockerfile: CoursesAPI/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq 
+
+      
+  studentsapi:
+    image: ${DOCKER_REGISTRY-}studentsapi
+    build:
+      context: .
+      dockerfile: StudentsAPI/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq 
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672

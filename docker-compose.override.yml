@@ -12,8 +12,8 @@ services:
     environment:
     - ASPNETCORE_ENVIRONMENT=Development
     - ASPNETCORE_HTTP_PORTS=8080
-    - ConnectionStrings__CoursesApiContext=Server=sqldata;Database=CourseDB;User Id=sa;Password=My!P@ssw0rd1;Encrypt=False
-    - MessageBroker__Host=amqp://guest:guest@rabbitmq:5672
+    - ConnectionStrings__CoursesApiContext=Server=sqldata;Database=CourseDB;User Id=sa;Password=!ADOPON2002;Encrypt=False
+    - MessageBroker__Host=amqp://adopon:!ADOPON2002@rabbitmq:5672
     ports:
     - "5081:8080"
 
@@ -21,15 +21,15 @@ services:
     environment:
     - ASPNETCORE_ENVIRONMENT=Development        
     - ASPNETCORE_HTTP_PORTS=8080
-    - ConnectionStrings__StudentsAPIContext=Server=sqldata;Database=StudentDB;User Id=sa;Password=My!P@ssw0rd1;Encrypt=False
-    - MessageBroker__Host=amqp://guest:guest@rabbitmq:5672
+    - ConnectionStrings__StudentsAPIContext=Server=sqldata;Database=StudentDB;User Id=sa;Password=!ADOPON2002;Encrypt=False
+    - MessageBroker__Host=amqp://adopon:!ADOPON2002@rabbitmq:5672
 
     ports:
     - "5082:8080"
 
   sqldata:
     environment:
-    - SA_PASSWORD=My!P@ssw0rd1
+    - SA_PASSWORD=!ADOPON2002
     - ACCEPT_EULA=Y
     ports:
     - "1433:1433"
@@ -41,8 +41,8 @@ services:
        - 5672:5672
        - 15672:15672
    environment:
-     - RABBITMQ_DEFAULT_USER=guest
-     - RABBITMQ_DEFAULT_PASS=guest
+     - RABBITMQ_DEFAULT_USER=adopon
+     - RABBITMQ_DEFAULT_PASS=!ADOPON2002
 
 volumes:
    lab2-sqldata:

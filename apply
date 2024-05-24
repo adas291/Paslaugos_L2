@@ -1,0 +1,1 @@
+kubectl apply -ftudentsapi-deployment.yaml

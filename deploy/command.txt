@@ -1,0 +1,5 @@
+kubectl port-forward $(kubectl get pod -l io.kompose.service=coursesapi -o jsonpath='{.items[0].metadata.name}') 5081:5081
+kubectl port-forward $(kubectl get pod -l io.kompose.service=studentsapi -o jsonpath='{.items[0].metadata.name}') 5081:5081
+kubectl port-forward $(kubectl get pod -l io.kompose.service=rabbitmq -o jsonpath='{.items[0].metadata.name}') 5081:5081
+kubectl port-forward $(kubectl get pod -l io.kompose.service=gateway -o jsonpath='{.items[0].metadata.name}') 5081:5081
+kubectl port-forward $(kubectl get pod -l io.kompose.service=sqldata -o jsonpath='{.items[0].metadata.name}') 5081:5081

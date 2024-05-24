@@ -1,9 +1,6 @@
 version: '3.4'
 
-
 services:
-
-
   gateway:
     image: ${DOCKER_REGISTRY-}gateway
     build:
@@ -13,7 +10,6 @@ services:
       - coursesapi
       - studentsapi 
       - rabbitmq 
-
 
   coursesapi:
     image: ${DOCKER_REGISTRY-}coursesapi

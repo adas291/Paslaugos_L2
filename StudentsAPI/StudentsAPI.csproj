@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\plain-rabbitmq-main\Plain.RabbitMQ\Plain.RabbitMQ.csproj" />
+  <ProjectReference Include="./plain-rabbitmq-main/Plain.RabbitMQ/Plain.RabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: ./kompose convert -f compose.yml2
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: coursesapi
+  name: coursesapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: coursesapi
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: ./kompose convert -f compose.yml2
+        kompose.version: 1.33.0 (3ce457399)
+      labels:
+        io.kompose.network/individualusdarbas-default: "true"
+        io.kompose.service: coursesapi
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8080"
+            - name: ConnectionStrings__CoursesApiContext
+              value: Server=sqldata;Database=CourseDB;User Id=sa;Password=!ADOPON2002;Encrypt=False
+            - name: MessageBroker__Host
+              value: amqp://adopon:!ADOPON2002@rabbitmq:5672
+          image: adas291/coursesapi
+          name: coursesapi
+          ports:
+            - containerPort: 8080
+              hostPort: 5081
+              protocol: TCP
+      restartPolicy: Always

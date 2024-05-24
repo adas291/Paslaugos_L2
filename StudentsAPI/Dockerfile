@@ -1,22 +1,22 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 5082
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ENV ASPNETCORE_URLS=http://+:5082
+
+USER app
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG configuration=Release
 WORKDIR /src
-COPY ["StudentsAPI/StudentsAPI.csproj", "StudentsAPI/"]
-RUN dotnet restore "./StudentsAPI/StudentsAPI.csproj"
+COPY ["StudentsAPI.csproj", "./"]
+RUN dotnet restore "StudentsAPI.csproj"
 COPY . .
-WORKDIR "/src/StudentsAPI"
-RUN dotnet build "./StudentsAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/."
+RUN dotnet build "StudentsAPI.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./StudentsAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+ARG configuration=Release
+RUN dotnet publish "StudentsAPI.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
